@@ -1,5 +1,5 @@
 <ul>
-    <li ng-repeat="link in navigation">
-        <a href="{{link.url}}">{{link.displayName}}</a>
+    <li ng-repeat="(key, value) in navigation">
+        <a href="#{{value.pageUrl}}">{{value.displayName}}</a>
     </li>
 </ul>

@@ -1,0 +1,23 @@
+{
+    "home" : {
+        "displayName" : "Home",
+        "pageUrl"     : "/",
+        "templateUrl" : "app/views/home.html",
+        "controller"  : "home",
+        "visible"     : true
+    },
+    "characterSheet" : {
+        "displayName" : "Character Sheet",
+        "pageUrl"     : "/character-sheet",
+        "templateUrl" : "app/views/character-sheet.html",
+        "controller"  : "charaterSheet",
+        "visible"     : true
+    },
+    "something" : {
+        "displayName" : "Something Else",
+        "pageUrl"     : "/something-else",
+        "templateUrl" : "",
+        "controller"  : "something",
+        "visible"     : true
+    }
+}

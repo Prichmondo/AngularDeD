@@ -1,45 +1,54 @@
 //var App = (function(angular, $, window, documen){
     
-    var App = angular.module('App', ['ngRoute']);
+    var App = angular.module('App', ['ngRoute', 'ngResource']);
     
-    App.provider('navMenuProvider', function NavMenuProvider() {
-        this.$get = {
-            home : {
-                displayName : "Home",
-                pageUrl     : "/",
-                templateUrl : "app/views/home.html",
-                controller  : "home"
+    App.provider('menu', function () {
+        
+        var menu = {};
+        return {
+            setMenu : function(data){
+                menu = data;
             },
-            characterSheet : {
-                displayName : "Character Sheet",
-                pageUrl     : "/character-sheet",
-                templateUrl : "app/views/character-sheet.html",
-                controller  : "charaterSheet"
-            },
-            something : {
-                displayName : "Something Else",
-                pageUrl     : "/something-else",
-                templateUrl : "",
-                controller  : "something"}
+            $get : function(){
+                return menu;
             }
+        };
+        
     });
+    
+    App.factory('Characters', ['$http',
+        function($http){
+            return $http({url:'/AngularDeD/assets/moks/characters.json'});
+        }
+    ]);
 
-    App.config(['$routeProvider', '$locationProvider', 'navMenuProvider',
-        function($routeProvider,   $locationProvider,   navMenuProvider) {
+    App.config( ['$routeProvider', '$httpProvider', '$locationProvider', 'menuProvider',
+        function( $routeProvider,   $httpProvider,   $locationProvider,   menuProvider) {
             
-            console.log(navMenuProvider.$get());
+            var menu;
+             
+            $.ajax({
+                url   : '/AngularDeD/assets/moks/navigation.json',
+                async : false 
+            }).success(function(response){
+                menu = response;
+            }).error(function(response){
+                //do something
+            })
+            
+            menuProvider.setMenu(menu);
             
             $routeProvider
-                .when('/', {
-                    templateUrl : 'app/views/home.html',
-                    controller  : 'home'
+                .when(menu.home.pageUrl, {
+                    templateUrl : menu.home.templateUrl,
+                    controller  : menu.home.controller
                 })
-                .when('/character-sheet', {
-                    templateUrl : 'app/views/character-sheet.html',
-                    controller  : 'charaterSheet'
+                .when(menu.characterSheet.pageUrl, {
+                    templateUrl : menu.characterSheet.templateUrl,
+                    controller  : menu.characterSheet.controller
                 })
                 .otherwise({
-                    redirectTo  : '/'
+                    redirectTo  : menu.home.templateUrl
                 });
             
             $locationProvider
@@ -47,8 +56,10 @@
                     enabled: false,
                     requireBase: false   
                 });
+                
         }
     ]);
+    
     
 //     return App;
 // 

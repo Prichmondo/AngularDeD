@@ -1,9 +1,22 @@
 (function(angular, $, window, documen, App){
     
-    App.controller('home', ['$scope', '$http', 'navMenu',
+    App.controller('home', ['$scope', '$http', 'Characters',
         
-        function ($scope, $http, $navMenu) {
-            $scope.title = "Pathfinder Character Sheet Manager";    
+        function ($scope, $http, Characters) {
+            
+            this.characters = []; 
+            console.log("test");
+            
+            Characters.then(
+                function success(response){
+                    $scope.characters = response.data;
+                },
+                function error(response){
+                    //do something
+                }
+            );
+            
+            this.title = "Pathfinder Character Sheet Manager";    
         }
         
     ]);

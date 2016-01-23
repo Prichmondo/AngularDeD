@@ -3,11 +3,11 @@
     .directive('pfNavigation', function(){
         return {
             restrict: 'A',
-            controller: function($scope, navMenu){
-             
-                $scope.navigation = navMenu.mainNav;
-                
-            },
+            controller: ['$scope', 'menu', function($scope, menu){
+
+                $scope.navigation = menu;
+
+            }],
             templateUrl: 'App/views/navigation.html'
         };
     });

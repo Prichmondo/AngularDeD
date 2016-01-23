@@ -1,3 +1,12 @@
-<main ng-controller="home">
-    <h1>{{title}}</h1>    
+<main ng-controller="home as h">
+    <h1>{{h.title}}</h1>
+    
+    <ul>
+        <li ng-repeat = "character in characters">
+            <a href="#">{{character.name}}</a>
+            &nbsp|&nbsp
+            <a href="#">delete</a>
+        </li>
+    </ul>
+        
 </main>
